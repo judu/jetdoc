@@ -1,4 +1,4 @@
-package com.example
+package com.clevercloud
 
 import unfiltered.request._
 import unfiltered.response._
@@ -34,7 +34,7 @@ class JarServer(jar: java.io.File) extends async.Plan
 
 	val logger = org.clapper.avsl.Logger(getClass)
 
-	logger.info("Using file " + jar.getName + " which " + jar.exists)
+	logger.info("Using file " + jar.getName)
 	def intent = async.Intent {
 		case r @ Path(p) => r match {
 			case GET(_) =>
@@ -43,14 +43,11 @@ class JarServer(jar: java.io.File) extends async.Plan
 					case SlashReg(pp) => pp + "index.html"
 					case pp => pp
 				}
-				logger.info("Path is: " + path)
 				Option(jarFile.getEntry(path.substring(1,path.length))).flatMap(ent => {
-					logger.info("Found entry " + ent.toString + " which can be a directory: " + ent.isDirectory)
 					if(ent.isDirectory)
 						None
 					else
 						Option(jarFile.getInputStream(ent)).map(is => {
-							logger.info("I have an iterator " + is.toString)
 						  	Iterator continually is.read takeWhile (-1 !=) map (_.toByte) toArray
 						})
 				}).map(arr =>

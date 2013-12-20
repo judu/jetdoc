@@ -1,8 +1,8 @@
-organization := "com.example"
+organization := "com.clevercloud"
 
-name := "nettyplayin"
+name := "getdoc"
 
-version := "0.1.0-SNAPSHOT"
+version := "0.1.0"
 
 scalaVersion := "2.10.1"
 
@@ -10,8 +10,10 @@ packageArchetype.java_application
 
 libraryDependencies ++= Seq(
    "net.databinder" %% "unfiltered-netty-server" % "0.7.1",
-   "net.databinder.dispatch" %% "dispatch-core" % "0.10.0",
+   "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
    "org.clapper" %% "avsl" % "1.0.1",
+	"org.apache.ivy" % "ivy" % "2.3.0",
+	"org.apache.httpcomponents" % "httpclient" % "4.3.1",
    "net.databinder" %% "unfiltered-spec" % "0.7.1" % "test"
 )
 
