@@ -1,10 +1,14 @@
+seq(conscriptSettings :_*)
+
 organization := "com.clevercloud"
 
-name := "getdoc"
+name := "jetdoc"
 
 version := "0.1.0"
 
 scalaVersion := "2.10.1"
+
+scalacOptions ++= Seq("-feature", "-deprecation")
 
 packageArchetype.java_application
 
@@ -18,5 +22,6 @@ libraryDependencies ++= Seq(
 )
 
 resolvers ++= Seq(
-  "jboss repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/"
+  "jboss repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/",
+  "Central" at "http://repo1.maven.org/maven2/"
 )

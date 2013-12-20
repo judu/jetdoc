@@ -2,6 +2,7 @@ package jetdoc
 
 import unfiltered.netty._
 import unfiltered.util.Port
+import scala.language.postfixOps
 
 /** embedded server */
 object Server {
@@ -26,7 +27,19 @@ object Server {
 	}
 
 	def main(args: Array[String]) {
-		val instance = args match {
+		val inst = instance(args)
+		if(inst.isEmpty) {
+			displayHelpMessage
+			System.exit(1)
+		} else {
+			inst.get.run(_ => println("Server running"))
+			dispatch.Http.shutdown
+			System.exit(0)
+		}
+	}
+
+	def instance(args: Array[String]) = {
+		args match {
 			case Array("-p", PortOpt(port), path) =>
 				Some(new Instance(port.toInt, path))
 			case Array(path, "-p", PortOpt(port)) =>
@@ -34,21 +47,17 @@ object Server {
 			case Array(path) =>
 				Some(new Instance(Port.any, path))
 			case _ =>
-				displayHelpMessageAndQuit
 				None
 		}
-		instance.get.run(_ => println("Server running"))
-		dispatch.Http.shutdown
 	}
 
-	def displayHelpMessageAndQuit: Unit = {
+	def displayHelpMessage: Unit = {
 		println("Usage: serve [-p port] path\n")
 		println("\tport is a number")
 		println("\tpath is either:")
 		println("\t\t- a path to a local file")
 		println("\t\t- a http URL to a remote file")
 		println("\t\t- an artifact shaped as {organization}:{artifact}:{version}")
-		System.exit(1)
 	}
 
 	val PortOpt = """(\d{4})""".r

@@ -1,0 +1,13 @@
+[app]
+  version: 0.1.0
+  org: com.clevercloud
+  name: jetdoc
+  class: jetdoc.JetdocScript
+[scala]
+  version: 2.10.1
+[repositories]
+  clever:http://maven.clever-cloud.com/
+  local
+  maven-local
+  sonatype-releases: https://oss.sonatype.org/service/local/repositories/releases/content/
+  maven-central
