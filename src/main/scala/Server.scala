@@ -1,4 +1,4 @@
-package com.clevercloud
+package jetdoc
 
 import unfiltered.netty._
 import unfiltered.util.Port

@@ -1,4 +1,4 @@
-package com.clevercloud
+package jetdoc
 
 import unfiltered.request._
 import unfiltered.response._

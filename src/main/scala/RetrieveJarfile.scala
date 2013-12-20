@@ -1,4 +1,4 @@
-package com.clevercloud
+package jetdoc
 
 import java.io.File
 
