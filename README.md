@@ -20,3 +20,14 @@ path is either:
 	- a http URL to a remote file
 	- an artifact shaped as {organization}:{artifact}:{version}
 ```
+
+## How to install?
+
+This tool can be installed with conscript
+(https://github.com/n8han/conscript)
+
+All you have to do is run
+
+```
+cs judu/jetdoc
+```
