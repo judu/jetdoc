@@ -8,7 +8,7 @@ version := "0.1.0"
 
 scalaVersion := "2.10.1"
 
-scalacOptions ++= Seq("-feature", "-deprecation")
+scalacOptions ++= Seq("-feature", "-deprecation", "-language:postfixOps")
 
 packageArchetype.java_application
 
