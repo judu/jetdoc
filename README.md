@@ -1,4 +1,4 @@
-## Docget 0.1.0
+## Jetdoc 0.1.0
 
 This tool is intended to help you open the javadoc from you
 dependencies.
@@ -12,7 +12,7 @@ dependencies.
 ## How to use?
 
 ```
-Usage: docget [-p port] path
+Usage: jetdoc [-p port] path
 
 port is a number
 path is either:
