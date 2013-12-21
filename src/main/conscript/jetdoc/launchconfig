@@ -4,7 +4,7 @@
   name: jetdoc
   class: jetdoc.JetdocScript
 [scala]
-  version: 2.10.1
+  version: 2.10
 [repositories]
   clever: http://maven.clever-cloud.com/
   local
