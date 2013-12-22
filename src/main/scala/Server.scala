@@ -73,7 +73,7 @@ object Server {
 		println("\tpath is either:")
 		println("\t\t- a path to a local file")
 		println("\t\t- a http URL to a remote file")
-		println("\t\t- an artifact shaped as {organization}:{artifact}:{version}")
+		println("\t\t- an artifact shaped as {organization}:{artifact}(,{scalaVersion}(,{sbtVersion})):{version}")
 	}
 
 	val PortOpt = """(\d{4})""".r

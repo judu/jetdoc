@@ -27,10 +27,14 @@ object RetrieveJavadoc {
 	import org.apache.ivy.core.resolve.ResolveOptions
 	import org.apache.ivy.plugins.parser.xml.XmlModuleDescriptorWriter
 	import org.apache.ivy.core.module.id.ModuleRevisionId
+	import scala.collection.JavaConversions._
 
 	val logger = org.clapper.avsl.Logger(RetrieveJavadoc.getClass)
 
 	val res = new URLResolver
+
+	val scalasbtVersion = "(.*),([^_]+),(.+)".r
+	val scalaVersionR = "(.*),([^_]+)".r
 
 	def apply(ref: String): Option[File] = {
 		if(ref.contains(":"))
@@ -44,12 +48,24 @@ object RetrieveJavadoc {
 
 	def apply(orga: String, artifact: String, version: String): Option[File] = {
 		logger.info(s"Trying to get ${orga}/${artifact}/${version}")
+
+		val (moduleName, scalaVersion, sbtVersion) = artifact match {
+			case scalasbtVersion(module,scv,sbv) => (module,Some(scv),Some(sbv))
+			case scalaVersionR(module,scv) => (module, Some(scv), None)
+			case m => (m, None,None)
+		}
+		val extraAttributes = List(
+			"scalaVersion" -> scalaVersion,
+			"sbtVersion" -> sbtVersion
+		).flatMap {
+			case (k,v) => v.map(vv => k -> vv)
+		}.toMap
 		val settings = new IvySettings
 		val resolver = new URLResolver
 		resolver.setM2compatible(true)
 		resolver.setName("central")
 		resolver.addArtifactPattern(
-			"http://repo1.maven.org/maven2/[organisation]/[module]/[revision]/[module](-[revision])(-[type]).[ext]"
+			"http://repo1.maven.org/maven2/[organisation]/[module](_[scalaVersion])(_[sbtVersion])/[revision]/[module](-[revision])(-[type]).[ext]"
 		)
 		val typesafe = new URLResolver
 		typesafe.setName("typesafe")
@@ -59,10 +75,10 @@ object RetrieveJavadoc {
 			"[organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]"
 		)
 		settings.addResolver(resolver)
-		//settings.addResolver(typesafe)
+		settings.addResolver(typesafe)
 		settings.setDefaultResolver(resolver.getName);
 		val ivy = Ivy.newInstance(settings)
-		val mri = ModuleRevisionId.newInstance(orga, artifact, version)
+		val mri = ModuleRevisionId.newInstance(orga, moduleName, version, extraAttributes)
 		val art: Artifact = new DefaultArtifact(mri, new java.util.Date, artifact, "javadoc", "jar")
 		val ropts = new ResolveOptions
 		ropts.setValidate(false)

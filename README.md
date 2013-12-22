@@ -18,7 +18,7 @@ port is a number
 path is either:
 	- a path to a local file
 	- a http URL to a remote file
-	- an artifact shaped as {organization}:{artifact}:{version}
+	- an artifact shaped as {organization}:{artifact}(,{scalaVersion}(,{sbtVersion})):{version}
 ```
 
 ## How to install?
