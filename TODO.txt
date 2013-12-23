@@ -1,0 +1,4 @@
+- Make the repository configurable
+- Take latest version if none given
+- Try to find the artifact with just the module name (like ls does)
+- Make a Cloud version (like, w/ web interface, serve at will)
